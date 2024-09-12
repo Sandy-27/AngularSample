@@ -1,0 +1,52 @@
+<h1>Add Employee Name and department</h1>
+<form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+    <div formArrayName="employees">
+    <div *ngFor="let employee of employees.controls; let i = index" [formGroupName]="i" class="employee-form-group">
+        <div class="form-group">
+        <label>EmployeeName</label>
+        <input type="text" class="form-control" placeholder="Enter Employee Name" formControlName="employeeName"/>
+        </div>
+    <div class="form-group">
+        <label>department</label>
+        <select formControlName="department" class="form-control">
+            <option value="">
+                Select Department
+            </option >
+            <option *ngFor="let dept of departmentList" [value]="dept">
+                {{dept}}
+            </option>         
+        </select>
+    </div>
+        <button type="button" class="btn btn-danger remove-btn" (click)="removeEmployee(i)">Remove</button>
+    </div>
+</div>
+<div class="form-actions">
+    <button type="button" class="btn btn-primary" (click)="AddEmployee()">
+        Add Employee
+    </button>
+    <button class="btn btn-success" type="submit">Submit</button>
+  </div>
+</form>
+
+<!-- table -->
+<p *ngIf="!setviewastable" class="view-link">
+    <a (click)="viewastable()" >Click here to view as table</a>
+    </p>
+  <div *ngIf="submittedrecords.length > 0 && setviewastable" class="table-container">
+    <h2>Submitted Records</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of submittedrecords">
+          <td>{{ record.employeeName }}</td>
+          <td>{{ record.department }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
