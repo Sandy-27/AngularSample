@@ -5,6 +5,9 @@
         <div class="form-group">
         <label>EmployeeName</label>
         <input type="text" class="form-control" placeholder="Enter Employee Name" formControlName="employeeName"/>
+        <div *ngIf="employees.at(i).get('employeeName')?.touched && employees.at(i).get('employeeName')?.invalid">
+          <small style="color: red;" *ngIf="employees.at(i).get('employeeName')?.hasError('required')">employeeName is required.</small>
+        </div>
         </div>
     <div class="form-group">
         <label>department</label>
@@ -16,6 +19,13 @@
                 {{dept}}
             </option>         
         </select>
+        <div *ngIf="employees.at(i).get('department')?.touched && employees.at(i).get('department')?.invalid">
+          <small style="color: red;" *ngIf="employees.at(i).get('department')?.hasError('required')">Department is required.</small>
+        </div>
+    </div>
+    <div class="form-group">
+     <label>Upload Image</label>
+     <input type="file" (change)="onFileUpload($event, i)" accept="image/*" class="form-control">
     </div>
         <button type="button" class="btn btn-danger remove-btn" (click)="removeEmployee(i)">Remove</button>
     </div>
@@ -29,9 +39,7 @@
 </form>
 
 <!-- table -->
-<p *ngIf="!setviewastable" class="view-link">
-    <a (click)="viewastable()" >Click here to view as table</a>
-    </p>
+
   <div *ngIf="submittedrecords.length > 0 && setviewastable" class="table-container">
     <h2>Submitted Records</h2>
     <table class="table table-striped">
@@ -39,12 +47,16 @@
         <tr>
           <th>Employee Name</th>
           <th>Department</th>
+          <th>Image</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let record of submittedrecords">
           <td>{{ record.employeeName }}</td>
           <td>{{ record.department }}</td>
+          <td>
+            <img *ngIf="record.employeeImage" [src]="record.employeeImage" alt="Employee Image" class="employee-image"/>
+          </td>
         </tr>
       </tbody>
     </table>

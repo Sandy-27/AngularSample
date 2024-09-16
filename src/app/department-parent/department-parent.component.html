@@ -1,2 +1,7 @@
 
-<app-add-department *ngIf="departmentList" [departmentList]="departmentList"></app-add-department>
+<app-add-department *ngIf="departmentList" [departmentList]="departmentList" (formSubmit)="formSubmit($event)" (formChange)="formChange($event)"></app-add-department>
+<a href="#" (click)="openNewTab()">Click here to view EmployeeData using Viewchild and services</a>
+<div *ngIf="opennewtab">
+<button (click)="getDatafromChild()">Get Data from child</button>
+<pre>{{storeEmployeeData|json}}</pre>
+</div>
